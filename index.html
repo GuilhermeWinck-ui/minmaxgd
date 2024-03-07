@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style>
+
+
+</style>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ 
+
+</head>
+
+<body>
+    <div class="container">
+     <div class="row">
+        <div class="col-md-5">
+             <h3>Script MinMaxGDJS :</h3>
+            <p>
+            <textarea rows="20" cols="50" id="scriptmmgd"> </textarea>
+            </p>
+        </div>
+        <div class="col-md-2">
+            <button  id="solve" type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Solve !</button>
+        </div>
+        <div class="col-md-5">
+            <h3> Results : </h3>
+            <div id="output" class="alert alert-success"></div>
+         <!--  <div id="output"></div> -->
+        </div>
+     </div>
+    </div>
+     
+    
+    
+<script>
+
+var script1 = "smatrix A(6,6),B(6,2),C(1,6); \r \r /*Defining Matrix A*/ \r A(1,2) = gd(2,0); \r A(2,1) = gd(0,5); \r A(3,4) = gd(1,0); \r A(4,3) = gd(0,5); \r A(5,2) = gd(0,2); \r A(5,4) = gd(0,2); \r A(5,6) = gd(1,0); \r A(6,5) = gd(0,20); \r \r print A; \r \r /*Defining Matrix B */ \r B(1,1) = gd(0,6); \r B(3,2) = gd(0,12); \r print B; \r\r /* Defining Matrix C */ \r C(1,6) = gd(0,0); \r print C; \r\r /* Tranfer Matrix H=CA^*B */ \r H = C*star(A)*B;\r print H; \r\r /* Reference output Z */ \r Z = series(eps,(0,80)(1,90)(3,100)(4,inf),(0,inf)); \r print Z; \r\r /* Greatest Control such that HU = Y <= Z */ \r Uopt = H \ Z; \r print Uopt; \r\r /* The optimal output */ \r Yopt = H*Uopt; \r print Yopt;"
+
+$(document).ready(function() {
+       
+       document.getElementById("scriptmmgd").value = script1;
+
+});
+
+var Module = {
+    noInitialRun : true,
+    'print': function(text) {
+        var element = document.getElementById('output');
+        element.innerHTML += text.replace('\n', '<br>', 'g') + '<br>';
+        //console.log(text);
+    }
+};
+
+</script>
+
+ <script type='text/javascript' src="minmaxgd.js"></script> 
+ 
+<script>
+$("#solve").click(function() {
+
+    var element = document.getElementById('output');
+    element.innerHTML = "";
+
+    Module.htmlstuff(document.getElementById("scriptmmgd").value);
+
+});
+</script>
+
+
+
+</body>
+
+</html>
+
